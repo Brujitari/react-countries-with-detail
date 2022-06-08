@@ -1,17 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from './pages/index'
+import { useState } from 'react';
+import CountriesContext from './context/CountriesContext';
+import './App.sass';
+import Index from './pages/AllCountries'
+import CountryDetail from './pages/CountryDetail'
 
 function App() {
+
+  const [data, setData] = useState({
+    isLoaded: false,
+    countries: []
+  })
+
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path='/detail' />
-          <Route path='/' element={<Index/>}/>
-        </Routes>
-      </BrowserRouter>
+      <CountriesContext.Provider value={{ data, setData }}>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/detail/:countryName' element={<CountryDetail />}/>
+            <Route path='/' element={<Index />} />
+          </Routes>
+        </BrowserRouter>
+      </CountriesContext.Provider>
     </div>
   );
 }

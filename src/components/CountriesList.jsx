@@ -1,25 +1,41 @@
 import axios from "axios";
+import { useContext, useEffect } from "react";
 import CountriesContext from "../context/CountriesContext";
-import { useState } from "react";
+import { Link, Outlet, useSearchParams } from "react-router-dom";
+import { spacesToHyphens } from '../utils'
 
 export default function CountriesList() {
-    const [{isLoaded, data}, setData] = useState({
-        isLoaded: false,
-        data: []
-    })
+    const { data, setData } = useContext(CountriesContext)
 
     const getCountries = async () => {
         const result = await axios.get(`https://restcountries.com/v3.1/all`)
         setData({
             isLoaded: true,
-            data: result.data
+            countries: result.data
         })
     }
-    console.log(getCountries())
+
+    const ShowCountries = () => {
+        return (
+            <section className="countries">
+                {data.countries.map((country, index) => {
+                    return(
+                        <Link to={`/detail/${spacesToHyphens(country.name.common)}`} key={index} className="country">
+                            <img className="country__flag" src={country.flags.png}></img>
+                            <p className="country__name">{country.name.common}</p>
+                        </Link>
+                    )
+                })}
+            </section>
+        )
+    }
+
+    useEffect(() => {
+        getCountries()
+    }, [])
+
 
     return (
-        <ul>
-            {getCountries().map(country => <li>{country.flag}</li>)}
-        </ul>
+        <ShowCountries />
     )
 }
