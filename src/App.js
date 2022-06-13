@@ -3,7 +3,8 @@ import { useState } from 'react';
 import CountriesContext from './context/CountriesContext';
 import './App.sass';
 import Index from './pages/AllCountries'
-import CountryDetail from './pages/CountryDetail'
+import CountryDetail from './pages/CountryDetail';
+import PathNotFound from './pages/PathNotFound'
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
           <Routes>
             <Route path='/detail/:countryName' element={<CountryDetail />}/>
             <Route path='/' element={<Index />} />
+            <Route path='*' element={<PathNotFound />} />
           </Routes>
         </BrowserRouter>
       </CountriesContext.Provider>
