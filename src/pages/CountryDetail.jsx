@@ -11,14 +11,11 @@ const CountryDetail = () => {
 
     const getOneCountry = async (country) => {
         const allCountries = await axios.get(`https://restcountries.com/v3.1/all`)
-        console.log('paramsName: ', country, 'searchName:', spacesToHyphens(allCountries.data[3].name.common))
         const result = allCountries.data.filter(element => spacesToHyphens(element.name.common) === country)
-        console.log('before: ', data, 'result: ', result)
         setData(({
             isLoaded: true,
             countries: result[0]
         }))
-        console.log('after: ', data)
     }
 
     useEffect(() => {

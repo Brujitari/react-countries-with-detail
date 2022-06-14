@@ -19,7 +19,7 @@ export default function CountriesList() {
 
     function CountriesSearch() {
         const handleChange = e => {
-            const search = `${searchParams.get('filter')}${e.target.value}`
+            const search = `${searchParams.get('filter')? searchParams.get('filter') : ''}${e.target.value}`
             setSearchParams({filter: search})
         }
     
@@ -32,13 +32,15 @@ export default function CountriesList() {
         getCountries()
     }, [])
 
+    if (!data.countries.length) {
+        return <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif"/>
+    }
 
     return (
         <section className="input">
             <CountriesSearch />
             <section className="countries">
-                {data.countries
-                .filter(country => country.name.common.includes(searchParams.get('filter')))
+                {data && data?.countries?.filter(country => searchParams.get('filter')? country.name.common.includes(searchParams.get('filter')) : true)
                 .map((country, index) => {
                     return (
                         <Link to={`/detail/${spacesToHyphens(country.name.common)}`} key={index} className="country">
