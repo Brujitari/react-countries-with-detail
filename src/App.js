@@ -20,12 +20,11 @@ function App() {
           <Routes>
             <Route path='/detail/:countryName' element={<CountryDetail />}/>
             <Route path='/' element={<Index />} />
-            <Route path='*' element={<PathNotFound />} />
           </Routes>
         </BrowserRouter>
       </CountriesContext.Provider>
     </div>
   );
 }
-
+//            <Route path='*' element={<PathNotFound />} />
 export default App;

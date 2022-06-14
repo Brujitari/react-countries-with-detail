@@ -1,14 +1,24 @@
-/* 
+import { useState, useEffect} from "react";
 
-const CountriesSearch = ({ filter }) => {
+function CountriesSearch({ setSearchParams, searchParams }) {
+    const [input, setInput] = useState('')
+
     const handleChange = e => {
-        setSearchParams({filter: e.target.value})
+        setInput(e.target.value)
     }
-
+    
+    useEffect(() => {
+        if (input.length) {
+            setSearchParams({ filter: input })
+        }
+        if (!input.length) {
+            setSearchParams({})
+        }
+    }, [input])
 
     return (
-        <input type="text" onChange={handleChange}/>
+        <input onChange={handleChange} />
     )
 }
 
-export default CountriesSearch; */
+export default CountriesSearch;
